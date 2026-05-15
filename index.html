@@ -133,7 +133,7 @@
             const rawIndex = target.dataset.index;
             if (rawIndex === undefined) return;
             const index = Number(rawIndex);
-            if (Number.isNaN(index) || index < 0 || index > 8) return;
+            if (Number.isNaN(index) || index < 0 || index > board.length - 1) return;
             move(index);
         });
         resetEl.addEventListener('click', resetGame);
