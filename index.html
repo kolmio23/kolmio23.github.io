@@ -60,8 +60,8 @@
 <body>
     <main class="game">
         <h1>Tic Tac Toe</h1>
-        <p id="status">Turn: X</p>
-        <div class="board" id="board" aria-label="Tic Tac Toe board"></div>
+        <p id="status" aria-live="polite">Turn: X</p>
+        <div class="board" id="board" role="grid" aria-label="Tic Tac Toe board"></div>
         <button id="reset" type="button">Reset</button>
     </main>
     <script>
@@ -97,7 +97,7 @@
                 btn.dataset.index = String(i);
                 btn.textContent = value;
                 btn.disabled = done || value !== '';
-                btn.setAttribute('aria-label', `Cell ${i + 1}`);
+                btn.setAttribute('aria-label', `Cell ${i + 1}, ${value || 'empty'}`);
                 boardEl.appendChild(btn);
             });
 
@@ -130,7 +130,9 @@
         boardEl.addEventListener('click', (event) => {
             const target = event.target;
             if (!(target instanceof HTMLButtonElement)) return;
-            const index = Number(target.dataset.index);
+            const rawIndex = target.dataset.index;
+            if (rawIndex === undefined) return;
+            const index = Number(rawIndex);
             if (!Number.isInteger(index)) return;
             move(index);
         });
