@@ -3,8 +3,23 @@
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="color-scheme" content="light dark">
     <title>kolmio23</title>
     <style>
+        :root {
+            --bg-color: #fafafa;
+            --text-color: #222;
+            --border-color: #333;
+            --surface-color: #fff;
+        }
+        @media (prefers-color-scheme: dark) {
+            :root {
+                --bg-color: #111;
+                --text-color: #e8e8e8;
+                --border-color: #bdbdbd;
+                --surface-color: #1c1c1c;
+            }
+        }
         html, body {
             margin: 0;
             height: 100%;
@@ -13,9 +28,9 @@
             display: flex;
             justify-content: center;
             align-items: center;
-            background: #fafafa;
+            background: var(--bg-color);
             font-family: "Courier New", monospace;
-            color: #222;
+            color: var(--text-color);
         }
         .game {
             text-align: center;
@@ -38,19 +53,21 @@
             margin-bottom: 1rem;
         }
         .cell {
-            border: 2px solid #333;
-            background: #fff;
+            border: 2px solid var(--border-color);
+            background: var(--surface-color);
+            color: var(--text-color);
             font-size: 2rem;
             cursor: pointer;
             line-height: 1;
         }
         .cell:disabled {
             cursor: default;
-            color: #333;
+            color: var(--text-color);
         }
         #reset {
-            border: 2px solid #333;
-            background: #fff;
+            border: 2px solid var(--border-color);
+            background: var(--surface-color);
+            color: var(--text-color);
             padding: 0.5rem 1rem;
             font-family: inherit;
             cursor: pointer;
