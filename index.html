@@ -13,14 +13,122 @@
             display: flex;
             justify-content: center;
             align-items: center;
+            background: #fafafa;
+            font-family: monospace, sans-serif;
+            color: #222;
+        }
+        .game {
+            text-align: center;
+        }
+        h1 {
+            margin: 0 0 1rem;
+            font-size: 1.5rem;
+        }
+        #status {
+            margin: 0 0 1rem;
+            font-size: 1rem;
+            min-height: 1.5rem;
+        }
+        .board {
+            display: grid;
+            grid-template-columns: repeat(3, 80px);
+            grid-template-rows: repeat(3, 80px);
+            gap: 0.5rem;
+            justify-content: center;
+            margin-bottom: 1rem;
+        }
+        .cell {
+            border: 2px solid #333;
             background: #fff;
-            font-family: monospace;
             font-size: 2rem;
+            cursor: pointer;
+            line-height: 1;
+        }
+        .cell:disabled {
+            cursor: default;
             color: #333;
+        }
+        #reset {
+            border: 2px solid #333;
+            background: #fff;
+            padding: 0.5rem 1rem;
+            font-family: inherit;
+            cursor: pointer;
         }
     </style>
 </head>
 <body>
-    <span>nothing here</span>
+    <main class="game">
+        <h1>Tic Tac Toe</h1>
+        <p id="status">Turn: X</p>
+        <div class="board" id="board" aria-label="Tic Tac Toe board"></div>
+        <button id="reset" type="button">Reset</button>
+    </main>
+    <script>
+        const boardEl = document.getElementById('board');
+        const statusEl = document.getElementById('status');
+        const resetEl = document.getElementById('reset');
+
+        let board = Array(9).fill('');
+        let current = 'X';
+        let done = false;
+
+        const winLines = [
+            [0, 1, 2], [3, 4, 5], [6, 7, 8],
+            [0, 3, 6], [1, 4, 7], [2, 5, 8],
+            [0, 4, 8], [2, 4, 6]
+        ];
+
+        function winner() {
+            for (const [a, b, c] of winLines) {
+                if (board[a] && board[a] === board[b] && board[b] === board[c]) {
+                    return board[a];
+                }
+            }
+            return null;
+        }
+
+        function render() {
+            boardEl.innerHTML = '';
+            board.forEach((value, i) => {
+                const btn = document.createElement('button');
+                btn.className = 'cell';
+                btn.type = 'button';
+                btn.textContent = value;
+                btn.disabled = done || value !== '';
+                btn.setAttribute('aria-label', `Cell ${i + 1}`);
+                btn.addEventListener('click', () => move(i));
+                boardEl.appendChild(btn);
+            });
+
+            const win = winner();
+            if (win) {
+                statusEl.textContent = `Winner: ${win}`;
+                done = true;
+            } else if (board.every(cell => cell !== '')) {
+                statusEl.textContent = 'Draw!';
+                done = true;
+            } else {
+                statusEl.textContent = `Turn: ${current}`;
+            }
+        }
+
+        function move(i) {
+            if (done || board[i]) return;
+            board[i] = current;
+            current = current === 'X' ? 'O' : 'X';
+            render();
+        }
+
+        function resetGame() {
+            board = Array(9).fill('');
+            current = 'X';
+            done = false;
+            render();
+        }
+
+        resetEl.addEventListener('click', resetGame);
+        render();
+    </script>
 </body>
 </html>
