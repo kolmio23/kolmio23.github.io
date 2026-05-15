@@ -9,6 +9,7 @@
         :root {
             --bg-color: #fafafa;
             --text-color: #222;
+            --disabled-text-color: #555;
             --border-color: #333;
             --surface-color: #fff;
         }
@@ -16,6 +17,7 @@
             :root {
                 --bg-color: #111;
                 --text-color: #e8e8e8;
+                --disabled-text-color: #bdbdbd;
                 --border-color: #bdbdbd;
                 --surface-color: #1c1c1c;
             }
@@ -62,7 +64,7 @@
         }
         .cell:disabled {
             cursor: default;
-            color: var(--text-color);
+            color: var(--disabled-text-color);
         }
         #reset {
             border: 2px solid var(--border-color);
