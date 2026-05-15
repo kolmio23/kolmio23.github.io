@@ -61,7 +61,7 @@
     <main class="game">
         <h1>Tic Tac Toe</h1>
         <p id="status" aria-live="polite">Turn: X</p>
-        <div class="board" id="board" role="grid" aria-label="Tic Tac Toe board"></div>
+        <div class="board" id="board" aria-label="Tic Tac Toe board"></div>
         <button id="reset" type="button">Reset</button>
     </main>
     <script>
@@ -133,7 +133,7 @@
             const rawIndex = target.dataset.index;
             if (rawIndex === undefined) return;
             const index = Number(rawIndex);
-            if (!Number.isInteger(index)) return;
+            if (Number.isNaN(index) || index < 0 || index > 8) return;
             move(index);
         });
         resetEl.addEventListener('click', resetGame);
