@@ -97,7 +97,7 @@
                 btn.dataset.index = String(i);
                 btn.textContent = value;
                 btn.disabled = done || value !== '';
-                btn.setAttribute('aria-label', `Cell ${i + 1}, ${value || 'empty'}`);
+                btn.setAttribute('aria-label', `Cell ${i + 1}, ${value ? `filled with ${value}` : 'empty'}`);
                 boardEl.appendChild(btn);
             });
 
