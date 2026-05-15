@@ -14,7 +14,7 @@
             justify-content: center;
             align-items: center;
             background: #fafafa;
-            font-family: monospace, sans-serif;
+            font-family: "Courier New", monospace;
             color: #222;
         }
         .game {
@@ -94,10 +94,10 @@
                 const btn = document.createElement('button');
                 btn.className = 'cell';
                 btn.type = 'button';
+                btn.dataset.index = String(i);
                 btn.textContent = value;
                 btn.disabled = done || value !== '';
                 btn.setAttribute('aria-label', `Cell ${i + 1}`);
-                btn.addEventListener('click', () => move(i));
                 boardEl.appendChild(btn);
             });
 
@@ -127,6 +127,13 @@
             render();
         }
 
+        boardEl.addEventListener('click', (event) => {
+            const target = event.target;
+            if (!(target instanceof HTMLButtonElement)) return;
+            const index = Number(target.dataset.index);
+            if (!Number.isInteger(index)) return;
+            move(index);
+        });
         resetEl.addEventListener('click', resetGame);
         render();
     </script>
