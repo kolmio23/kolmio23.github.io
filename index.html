@@ -68,8 +68,9 @@
         const boardEl = document.getElementById('board');
         const statusEl = document.getElementById('status');
         const resetEl = document.getElementById('reset');
+        const BOARD_CELLS = 9;
 
-        let board = Array(9).fill('');
+        let board = Array(BOARD_CELLS).fill('');
         let current = 'X';
         let done = false;
 
@@ -92,12 +93,14 @@
             boardEl.innerHTML = '';
             board.forEach((value, i) => {
                 const btn = document.createElement('button');
+                const row = Math.floor(i / 3) + 1;
+                const col = (i % 3) + 1;
                 btn.className = 'cell';
                 btn.type = 'button';
                 btn.dataset.index = String(i);
                 btn.textContent = value;
                 btn.disabled = done || value !== '';
-                btn.setAttribute('aria-label', `Cell ${i + 1}, ${value ? `filled with ${value}` : 'empty'}`);
+                btn.setAttribute('aria-label', `Row ${row}, column ${col}, ${value ? `filled with ${value}` : 'empty'}`);
                 boardEl.appendChild(btn);
             });
 
@@ -121,7 +124,7 @@
         }
 
         function resetGame() {
-            board = Array(9).fill('');
+            board = Array(BOARD_CELLS).fill('');
             current = 'X';
             done = false;
             render();
